@@ -1,0 +1,10 @@
+def login(page):
+    page.goto("https://impl.workday.com/wday/authgwy/celergo_pt1/login.htmld?returnTo=%2fcelergo_pt1%2fd%2fhome.htmld")
+    page.get_by_role("textbox", name="Username").click()
+    page.get_by_role("textbox", name="Username").fill("US_Impl")
+    page.get_by_role("textbox", name="Username").press("Enter")
+    page.get_by_role("textbox", name="Password").click()
+    page.get_by_role("textbox", name="Password").fill("")
+    page.get_by_role("button", name="Sign In").click()
+    page.get_by_role("checkbox", name="Remember this device").check()
+    page.get_by_role("button", name="Submit").click()
