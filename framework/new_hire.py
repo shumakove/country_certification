@@ -49,9 +49,16 @@ def start_proxy(page):
     page.get_by_role("textbox", name="User to Proxy As").click()
     page.get_by_role("textbox", name="User to Proxy As").fill("logan")
     page.get_by_role("textbox", name="User to Proxy As").press("Enter")
-    time.sleep(3)
+    time.sleep(1)
     page.get_by_role("button", name="OK").click()
     time.sleep(1)
+
+def stop_proxy(page):
+    page.get_by_role("combobox", name="Search Workday").click()
+    page.get_by_role("combobox", name="Search Workday").fill("stop proxy")
+    page.get_by_role("combobox", name="Search Workday").press("Enter")
+    page.get_by_role("link", name="Stop Proxy").click()
+    page.locator('[data-automation-id="wd-CommandButton_uic_okButton"]').click()
 
 def aprove_position(page, position_name):
 
@@ -65,27 +72,32 @@ def aprove_position(page, position_name):
 
     # Enter Company
     page.get_by_label("Company", exact=True).locator("li").click()
-    page.get_by_role("textbox", name="Search", exact=True).click() # TODO fix this
-    page.get_by_role("textbox", name="Search", exact=True).fill("Fox Broadcasting")
-    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
-    page.get_by_role("button", name="Save Company").click()
+    page.locator('[data-automation-id="searchBox"]').fill("Fox Broadcasting")
+    page.locator('[data-automation-id="searchBox"]').press("Enter")
+    time.sleep(1)
+    page.locator('[data-automation-id="saveButton"]').nth(1).click()
 
     # Enter cost center
     page.get_by_label("Cost Center", exact=True).locator("li").click()
-    page.get_by_role("textbox", name="Cost Center").fill("32100 R&D - Product Strategy")
-    page.get_by_role("textbox", name="Cost Center").press("Enter")
-    page.get_by_role("button", name="Save Cost Center").click()
+    page.locator('[data-automation-id="searchBox"]').fill("32100 R&D - Product Strategy")
+    page.locator('[data-automation-id="searchBox"]').press("Enter")
+    time.sleep(1)
+    page.locator('[data-automation-id="saveButton"]').nth(2).click()
 
     # Enter region
     page.get_by_label("Region", exact=True).locator("li").click()
-    page.get_by_role("textbox", name="Search", exact=True).fill("APA - Australia")
-    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
-    page.get_by_role("button", name="Save Region").click()
+    page.locator('[data-automation-id="searchBox"]').fill("APA - Australia")
+    page.locator('[data-automation-id="searchBox"]').press("Enter")
+    time.sleep(1)
+    page.locator('[data-automation-id="saveButton"]').nth(3).click()
 
     page.get_by_role("button", name="Submit").click()
+    time.sleep(3)
+    page.locator('[data-automation-id="closeButton"]').click()
+    stop_proxy(page)
+    time.sleep(2)
 
-
-def submit_new_hire(page):
+def submit_new_hire(page, position_id):
     # Open New Hire wizzard
     page.get_by_role("combobox", name="Search Workday").click()
     page.get_by_role("combobox", name="Search Workday").fill("Hire Employee")
@@ -102,7 +114,7 @@ def submit_new_hire(page):
     page.get_by_role("textbox", name="Country").fill("south africa")
     page.get_by_role("textbox", name="Country").press("Enter")
     page.get_by_role("textbox", name="Given Name(s)").click()
-    page.get_by_role("textbox", name="Given Name(s)").fill("GivenNameEmployee1")
+    page.get_by_role("textbox", name="Given Name(s)").fill(position_id+"_GivenNameEmployee2"+str(random.randint(0,1000)))
     page.get_by_role("textbox", name="Middle Name").click()
     page.get_by_role("textbox", name="Middle Name").fill("MiddleNameEmployee1")
     page.get_by_role("textbox", name="Family Name").click()
@@ -120,17 +132,6 @@ def submit_new_hire(page):
     page.get_by_label("Mobile").click()
     page.get_by_role("textbox", name="Type").click()
     page.get_by_text("Home", exact=True).click()
-    
-
-    # Enter work phone
-    #page.get_by_role("button", name="Add Phone").click()
-    #page.locator("[id=\"\\35 6\\$506134--uid45-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$506134--uid45-input\"]").fill("681906058")
-    #page.get_by_role("button", name="Phone Device select one").click()
-    #page.get_by_role("option", name="Fax").locator("div").nth(1).click()
-    #page.locator("[id=\"\\35 6\\$31871--uid48-input\"]").click()
-    #page.get_by_role("option", name="Work checkbox Not Checked").get_by_role("checkbox").check()
-
 
     # Enter Home address
     page.mouse.wheel(0, 10)
@@ -157,30 +158,7 @@ def submit_new_hire(page):
     page.get_by_role("group", name="Address").get_by_label("Type").click()
     page.get_by_role("option", name="Home checkbox Not Checked").get_by_role("checkbox").check()
     
-    # Enter work address
-    #page.get_by_role("button", name="Add Address").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid96-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid96-input\"]").fill("3")
-    #page.locator("[id=\"\\35 6\\$709377--uid97-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid97-input\"]").fill("StreetName21")
-    #page.locator("[id=\"\\35 6\\$709377--uid98-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid98-input\"]").fill("1")
-    #page.locator("[id=\"\\35 6\\$709377--uid99-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid99-input\"]").fill("4")
-    #page.locator("[id=\"\\35 6\\$709377--uid100-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid100-input\"]").fill("AdditionalAddress2")
-    #page.locator("[id=\"\\35 6\\$709377--uid101-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid101-input\"]").fill("CapeTown")
-    #page.locator("[id=\"\\35 6\\$709377--uid102-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid102-input\"]").fill("suburb")
-    #page.locator("[id=\"\\35 6\\$709377--uid103-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709377--uid103-input\"]").fill("08093")
-    #page.locator("[id=\"\\35 6\\$709378--uid104-input\"]").click()
-    #page.locator("[id=\"\\35 6\\$709378--uid104-input\"]").fill("Western Cape")
-    #page.locator("[id=\"\\35 6\\$709378--uid104-input\"]").press("Enter")
-    #page.locator("[id=\"\\35 6\\$31871--uid105-input\"]").click()
-    #page.get_by_role("option", name="Work checkbox Not Checked").get_by_role("checkbox").check()
-    
+   
     # Enter Email
     page.mouse.wheel(0, 10)
     page.get_by_role("button", name="Add Email").click()
@@ -193,18 +171,52 @@ def submit_new_hire(page):
     # Open Hire information
     #page.get_by_role("spinbutton", name="Hire Date").click()
     #page.get_by_role("spinbutton", name="First Day of Work").click()
-    #page.get_by_role("textbox", name="Reason").click()
-    #page.get_by_text("New Hire").click()
-    #page.get_by_text("New Hire > New Position").click()
-    #page.get_by_role("textbox", name="Position").click()
-    #page.get_by_role("textbox", name="Position").fill("kl")
-    #page.get_by_role("textbox", name="Position").press("Enter")
-    #page.get_by_text("KLTSTdcod-19").click()
-    #page.get_by_role("textbox", name="Location").click()
-    #page.get_by_role("textbox", name="Location").fill("cape")
-    #page.get_by_role("textbox", name="Location").press("Enter")
-    #page.get_by_role("textbox", name="Job Profile").click()
-    #page.get_by_role("textbox", name="Job Profile").fill("tax")
-    #page.get_by_role("textbox", name="Job Profile").press("Enter")
-    #page.get_by_text("Tax Accountant").click()
-    #page.get_by_role("button", name="Submit").click()
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
+    if month == 1:
+        month = 12
+        year -= year
+    
+    
+    time.sleep(3)
+    page.locator('[data-automation-id="dateSectionDay-input"]').nth(0).click()
+    time.sleep(1)
+    page.keyboard.press("1")
+    page.locator('[data-automation-id="dateSectionMonth-input"]').nth(0).click()
+    time.sleep(1)
+    for char in str(month):
+        page.keyboard.press(char)
+    page.locator('[data-automation-id="dateSectionYear-input"]').nth(0).click()
+    time.sleep(1)
+    for char in str(year):
+        page.keyboard.press(char)
+
+    page.locator('[data-automation-id="dateSectionDay-input"]').nth(1).click()
+    time.sleep(1)
+    page.keyboard.press("1")
+    page.locator('[data-automation-id="dateSectionMonth-input"]').nth(1).click()
+    time.sleep(1)
+    for char in str(month):
+        page.keyboard.press(char)
+    
+    page.locator('[data-automation-id="dateSectionYear-input"]').nth(1).click()
+    time.sleep(1)
+    for char in str(year):
+        page.keyboard.press(char)
+
+    page.get_by_role("textbox", name="Reason").click()
+    page.get_by_text("New Hire").click()
+    page.get_by_text("New Hire > New Position").click()
+    page.get_by_role("textbox", name="Position").click()
+    page.get_by_role("textbox", name="Position").fill(position_id)
+    page.get_by_role("textbox", name="Position").press("Enter")
+
+    page.get_by_role("textbox", name="Location").click()
+    page.get_by_role("textbox", name="Location").fill("cape")
+    page.get_by_role("textbox", name="Location").press("Enter")
+    page.get_by_role("textbox", name="Job Profile").click()
+    page.get_by_role("textbox", name="Job Profile").fill("tax")
+    page.get_by_role("textbox", name="Job Profile").press("Enter")
+    page.get_by_text("Tax Accountant").click()
+    page.get_by_role("button", name="Submit").click()
+    time.sleep(30)

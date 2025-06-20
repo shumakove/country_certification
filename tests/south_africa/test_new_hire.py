@@ -29,7 +29,7 @@ class TestHireEmployeeLastMonth:
 
     def test_hire_employee1(self):
         login(self.page)
-        position_id = create_position(self.page)
-        aprove_position(self.page, position_id)
-        #submit_new_hire(self.page)
-        
+        #position_id = create_position(self.page)
+        #aprove_position(self.page, position_id)
+        submit_new_hire(self.page, 'Nova937')
+        time.sleep(10)
