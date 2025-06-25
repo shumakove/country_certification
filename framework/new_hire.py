@@ -35,7 +35,7 @@ def create_position(page) -> str:
     time.sleep(1)
     page.locator('[data-automation-id="datePickerSelectedToday"]').click()
 
-    page.locator(".WIDF").first.click()
+    page.locator('[data-automation-id="checkbox"]').nth(0).click()
     page.get_by_role("button", name="Submit").click()
     time.sleep(4)
     return position_id
@@ -178,7 +178,7 @@ def submit_new_hire(page, position_id):
         year -= year
     
     
-    time.sleep(3)
+    time.sleep(5)
     page.locator('[data-automation-id="dateSectionDay-input"]').nth(0).click()
     time.sleep(1)
     page.keyboard.press("1")
@@ -204,19 +204,36 @@ def submit_new_hire(page, position_id):
     for char in str(year):
         page.keyboard.press(char)
 
-    page.get_by_role("textbox", name="Reason").click()
-    page.get_by_text("New Hire").click()
-    page.get_by_text("New Hire > New Position").click()
+    
+    time.sleep(3)
     page.get_by_role("textbox", name="Position").click()
     page.get_by_role("textbox", name="Position").fill(position_id)
     page.get_by_role("textbox", name="Position").press("Enter")
+    
+    page.get_by_role("textbox", name="Reason").click()
+    page.get_by_role("textbox", name="Reason").fill("New Hire > New Position")
+    page.get_by_role("textbox", name="Reason").press("Enter")
+    page.get_by_role("textbox", name="Reason").press("Enter")
+
+    
+
+    time.sleep(30)
+    page.get_by_role("textbox", name="Employee Type").click()
+    page.get_by_role("textbox", name="Employee Type").fill("regular")
+    page.get_by_role("textbox", name="Employee Type").press("Enter")
 
     page.get_by_role("textbox", name="Location").click()
     page.get_by_role("textbox", name="Location").fill("cape")
     page.get_by_role("textbox", name="Location").press("Enter")
+    
     page.get_by_role("textbox", name="Job Profile").click()
     page.get_by_role("textbox", name="Job Profile").fill("tax")
     page.get_by_role("textbox", name="Job Profile").press("Enter")
     page.get_by_text("Tax Accountant").click()
+
+    page.get_by_role("textbox", name="Time Type").click()
+    page.get_by_role("textbox", name="Time Type").fill("full time")
+    page.get_by_role("textbox", name="Time Type").press("Enter")
+
     page.get_by_role("button", name="Submit").click()
     time.sleep(30)
