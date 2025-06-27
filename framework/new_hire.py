@@ -1,15 +1,11 @@
 import time
 import datetime
 import random
-
-
-
-
-
-
-
+from framework.proxy import *
+from framework.sys_integration import *
 
 def submit_new_hire(page, position_id):
+    first_name = position_id+"_GivenNameEmployee2"+str(random.randint(0,1000))
     # Open New Hire wizzard
     page.get_by_role("combobox", name="Search Workday").click()
     page.get_by_role("combobox", name="Search Workday").fill("Hire Employee")
@@ -26,7 +22,7 @@ def submit_new_hire(page, position_id):
     page.get_by_role("textbox", name="Country").fill("south africa")
     page.get_by_role("textbox", name="Country").press("Enter")
     page.get_by_role("textbox", name="Given Name(s)").click()
-    page.get_by_role("textbox", name="Given Name(s)").fill(position_id+"_GivenNameEmployee2"+str(random.randint(0,1000)))
+    page.get_by_role("textbox", name="Given Name(s)").fill(first_name)
     page.get_by_role("textbox", name="Middle Name").click()
     page.get_by_role("textbox", name="Middle Name").fill("MiddleNameEmployee1")
     page.get_by_role("textbox", name="Family Name").click()
@@ -147,3 +143,164 @@ def submit_new_hire(page, position_id):
     page.get_by_role("textbox", name="Job Profile").press("Enter")
 
     page.get_by_role("button", name="Submit").click()
+    return first_name
+
+def aprove_new_hire(page, first_name):
+    start_proxy(page)
+
+    page.get_by_role("button", name="My Tasks Items").click()
+    page.get_by_role("textbox", name="Search: All Items").click()
+    page.get_by_role("textbox", name="Search: All Items").fill(first_name)
+    page.get_by_role("textbox", name="Search: All Items").press("Enter")
+    time.sleep(5)
+
+    page.get_by_role("button", name="Add Salary").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("General Salary Plan")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    
+    page.get_by_role("textbox", name="Error: The field Amount is").click()
+    page.get_by_role("textbox", name="Error: The field Amount is").fill("10000")
+    page.get_by_role("textbox", name="Error: The field Amount is").press("Enter")
+
+    page.get_by_role("listbox", name="items selected for Frequency").locator("li").click()
+    page.get_by_role("textbox", name="Frequency").fill("Monthly")
+    page.get_by_role("textbox", name="Frequency").press("Enter")
+    page.get_by_role("option", name="Monthly radio button unselected has related actions", exact=True).get_by_role("radio").check()
+    page.get_by_role("button", name="Save Salary").click()
+    time.sleep(3)
+
+    page.get_by_role("button", name="Add Allowance").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("Unit - Car Allowance Plan")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    page.get_by_role("button", name="Save Allowance").click()
+    time.sleep(3)
+
+    page.get_by_role("button", name="Add Allowance").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("CellPhone Allowance")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    page.get_by_role("button", name="Save Allowance Row").click()
+    time.sleep(3)
+
+    page.get_by_role("button", name="Add Allowance").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("House Allowance Plan")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    page.get_by_role("button", name="Save Allowance Row").click()
+
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Submit").click()
+
+    page.get_by_role("button", name="Close", exact=True).click()
+    
+    time.sleep(10)
+    page.get_by_text("GenderGender").click()
+    page.get_by_role("button", name="Gender select one").click()
+    page.get_by_role("option", name="Male", exact=True).locator("div").nth(1).click()
+    page.get_by_role("button", name="Save Gender").click()
+
+    page.get_by_role("button", name="Edit Date of Birth").click()
+    #TODO: Add datepicking logic
+    page.get_by_role("button", name="Save Date of Birth").click()
+    time.sleep(3)
+
+    page.get_by_text("Country of BirthCountry of").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("South Africa")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Place of Birth").click()
+    time.sleep(3)
+
+    page.get_by_text("Marital StatusMarital Status").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("Single")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Marital Status").click()
+    time.sleep(3)
+
+    page.get_by_text("Race/EthnicityRace/Ethnicity").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("African")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Race/Ethnicity").click()
+    time.sleep(3)
+
+    page.get_by_text("Citizenship StatusCitizenship").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("non-citizen(South africa)")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Citizenship Status").click()
+    time.sleep(3)
+
+    page.get_by_text("Primary NationalityPrimary").click()
+    page.get_by_role("textbox", name="Search", exact=True).fill("South Africa")
+    page.get_by_role("textbox", name="Search", exact=True).press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Nationality").click()
+    time.sleep(3)
+    page.get_by_role("button", name="Submit").click()
+
+    page.get_by_role("button", name="Close", exact=True).click()
+    
+    time.sleep(10)
+    page.locator("tbody").filter(has_text="*Country*National ID").get_by_label("Add Row").click()
+    page.locator("tbody").filter(has_text="*Country*National ID").get_by_label("Add Row").click()
+    page.get_by_role("textbox", name="Country").nth(0).click()
+    page.get_by_role("textbox", name="Country").nth(0).fill("South Africa")
+    page.get_by_role("textbox", name="Country").nth(0).press("Enter")
+    time.sleep(1)
+    page.get_by_role("textbox", name="National ID Type").nth(0).click()
+    page.get_by_text("ID Number").click()
+    page.get_by_role("cell", name="_____________").get_by_role("textbox").click()
+    #TODO Implement Backspace several times and fill value
+
+
+    page.get_by_role("textbox", name="Country").nth(1).click()
+    page.get_by_role("textbox", name="Country").nth(1).fill("South Africa")
+    page.get_by_role("textbox", name="Country").nth(1).press("Enter")
+    page.get_by_role("textbox", name="National ID Type").nth(1).click()
+    page.get_by_text("Tax Reference Number").click()
+    page.get_by_role("cell", name="__________").get_by_role("textbox").click()
+    page.get_by_role("button", name="Submit").click()
+
+    page.get_by_role("button", name="Close", exact=True).click()
+    time.sleep(10)
+    
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Close", exact=True).click()
+
+    time.sleep(10)
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Close", exact=True).click()
+
+    time.sleep(10)
+    page.get_by_role("button", name="Add").click()
+    page.get_by_role("textbox", name="One-Time Payment Plan").click()
+    page.get_by_role("textbox", name="One-Time Payment Plan").fill("Signing Bonus Plan")
+    page.get_by_role("textbox", name="One-Time Payment Plan").press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Save Organizational").click()
+
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Close", exact=True).click()
+
+    time.sleep(10)
+    page.get_by_role("textbox", name="Proposed Pay Group").click()
+    page.get_by_role("textbox", name="Proposed Pay Group").fill("GPC_SOUTH_AFRICA_PECI")
+    page.get_by_role("textbox", name="Proposed Pay Group").press("Enter")
+    time.sleep(1)
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Close", exact=True).click()
+
+    time.sleep(10)
+    page.get_by_role("button", name="Let's Get Started Benefit").click()
+    page.get_by_role("button", name="Review and Sign").click()
+    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Done").click()
+
+    stop_proxy()
+
+    page.get_by_role("button", name="My Tasks Items").click()
+    page.get_by_role("textbox", name="Search: All Items").click()
+    page.get_by_role("textbox", name="Search: All Items").fill(first_name)
+    page.get_by_role("textbox", name="Search: All Items").press("Enter")
+    page.get_by_role("button", name="Approve").click()
+    page.get_by_role("button", name="Close", exact=True).click()

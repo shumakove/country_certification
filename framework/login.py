@@ -4,7 +4,7 @@ def login(page):
     page.get_by_role("textbox", name="Username").fill("US_Impl")
     page.get_by_role("textbox", name="Username").press("Enter")
     page.get_by_role("textbox", name="Password").click()
-    page.get_by_role("textbox", name="Password").fill("TestCelergo@12345")
+    page.get_by_role("textbox", name="Password").fill("")
     page.get_by_role("button", name="Sign In").click()
     page.get_by_role("checkbox", name="Remember this device").check()
     page.get_by_role("button", name="Submit").click()

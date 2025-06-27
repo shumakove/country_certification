@@ -27,10 +27,11 @@ def browser_context(request):
 
 @pytest.mark.usefixtures("browser_context")
 class TestHireEmployeeLastMonth:
-
     def test_hire_employee1(self):
         login(self.page)
-        position_id = create_position(self.page)
-        aprove_position(self.page, position_id)
-        submit_new_hire(self.page, position_id)
+        #position_id = create_position(self.page)
+        #aprove_position(self.page, position_id)
+        #submit_new_hire(self.page, position_id)
+        launch_sys_integrtion(self.page,"GPC_South_Africa_PECI Convergence 1.1")
+        #launch_process_monitor(self.page)
         time.sleep(10)
