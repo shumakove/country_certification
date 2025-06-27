@@ -1,8 +1,9 @@
 import pytest
 import time
-from playwright.sync_api import sync_playwright, Playwright
+from playwright.sync_api import sync_playwright, Playwright,expect
 from framework.login import login
 from framework.new_hire import *
+from framework.new_position import *
 
 
 @pytest.fixture(scope="class") 

@@ -1,101 +1,13 @@
 import time
 import datetime
 import random
-def generate_name_from_date():
-    # List of sample words
-    words = ['Falcon', 'Shadow', 'Blaze', 'Nova', 'Echo', 'Storm', 'Phoenix']
 
-    # Pick a random word
-    word = random.choice(words)
 
-    # Generate a random 3-digit number
-    number = random.randint(100, 999)
 
-    # Combine word and number
-    name = f"{word}{number}"
-    return name
 
-def create_position(page) -> str:
-    position_id = generate_name_from_date()
-    page.get_by_role("combobox", name="Search Workday").click()
-    page.get_by_role("combobox", name="Search Workday").fill("Create position")
-    page.get_by_role("combobox", name="Search Workday").press("Enter")
-    page.get_by_role("link", name="Create position").click()
-    page.get_by_role("textbox", name="Supervisory Organization").click()
-    page.get_by_role("textbox", name="Supervisory Organization").fill("Celergo_Master_Division")
-    page.get_by_role("textbox", name="Supervisory Organization").press("Enter")
-    time.sleep(2)
-    page.get_by_role("button", name="OK").click()
-    page.get_by_role("textbox", name="Job Posting Title").click()
-    page.get_by_role("textbox", name="Job Posting Title").fill(position_id)
-    page.locator('[data-automation-id="datePickerButton"]').nth(0).click()
-    page.locator('[data-automation-id="datePickerSelectedToday"]').click()
-    time.sleep(1)
-    page.locator('[data-automation-id="datePickerButton"]').nth(1).click()
-    time.sleep(1)
-    page.locator('[data-automation-id="datePickerSelectedToday"]').click()
 
-    page.locator('[data-automation-id="checkbox"]').nth(0).click()
-    page.get_by_role("button", name="Submit").click()
-    time.sleep(4)
-    return position_id
 
-def start_proxy(page):
-    page.get_by_role("combobox", name="Search Workday").click()
-    page.get_by_role("button", name="clear search").click()
-    page.get_by_role("combobox", name="Search Workday").fill("start proxy")
-    page.get_by_role("combobox", name="Search Workday").press("Enter")
-    page.get_by_role("link", name="Start Proxy").click()
-    page.get_by_role("textbox", name="User to Proxy As").click()
-    page.get_by_role("textbox", name="User to Proxy As").fill("logan")
-    page.get_by_role("textbox", name="User to Proxy As").press("Enter")
-    time.sleep(1)
-    page.get_by_role("button", name="OK").click()
-    time.sleep(1)
 
-def stop_proxy(page):
-    page.get_by_role("combobox", name="Search Workday").click()
-    page.get_by_role("combobox", name="Search Workday").fill("stop proxy")
-    page.get_by_role("combobox", name="Search Workday").press("Enter")
-    page.get_by_role("link", name="Stop Proxy").click()
-    page.locator('[data-automation-id="wd-CommandButton_uic_okButton"]').click()
-
-def aprove_position(page, position_name):
-
-    start_proxy(page)
-    page.get_by_role("button", name="My Tasks Items").click()
-    page.get_by_role("textbox", name="Search: All Items").click()
-    page.get_by_role("textbox", name="Search: All Items").fill(position_name)
-    page.get_by_role("textbox", name="Search: All Items").press("Enter")
-    time.sleep(5)
-    
-
-    # Enter Company
-    page.get_by_label("Company", exact=True).locator("li").click()
-    page.locator('[data-automation-id="searchBox"]').fill("Fox Broadcasting")
-    page.locator('[data-automation-id="searchBox"]').press("Enter")
-    time.sleep(1)
-    page.locator('[data-automation-id="saveButton"]').nth(1).click()
-
-    # Enter cost center
-    page.get_by_label("Cost Center", exact=True).locator("li").click()
-    page.locator('[data-automation-id="searchBox"]').fill("32100 R&D - Product Strategy")
-    page.locator('[data-automation-id="searchBox"]').press("Enter")
-    time.sleep(1)
-    page.locator('[data-automation-id="saveButton"]').nth(2).click()
-
-    # Enter region
-    page.get_by_label("Region", exact=True).locator("li").click()
-    page.locator('[data-automation-id="searchBox"]').fill("APA - Australia")
-    page.locator('[data-automation-id="searchBox"]').press("Enter")
-    time.sleep(1)
-    page.locator('[data-automation-id="saveButton"]').nth(3).click()
-
-    page.get_by_role("button", name="Submit").click()
-    time.sleep(3)
-    page.locator('[data-automation-id="closeButton"]').click()
-    stop_proxy(page)
-    time.sleep(2)
 
 def submit_new_hire(page, position_id):
     # Open New Hire wizzard
@@ -204,36 +116,34 @@ def submit_new_hire(page, position_id):
     for char in str(year):
         page.keyboard.press(char)
 
-    
-    time.sleep(3)
-    page.get_by_role("textbox", name="Position").click()
-    page.get_by_role("textbox", name="Position").fill(position_id)
-    page.get_by_role("textbox", name="Position").press("Enter")
-    
     page.get_by_role("textbox", name="Reason").click()
     page.get_by_role("textbox", name="Reason").fill("New Hire > New Position")
     page.get_by_role("textbox", name="Reason").press("Enter")
+    time.sleep(1)
     page.get_by_role("textbox", name="Reason").press("Enter")
 
-    
+    page.get_by_role("textbox", name="Position").click()
+    page.get_by_role("textbox", name="Position").fill(position_id)
+    page.get_by_role("textbox", name="Position").press("Enter")
+    time.sleep(1)
+    page.get_by_role("textbox", name="Position").press("Enter")
 
-    time.sleep(30)
     page.get_by_role("textbox", name="Employee Type").click()
-    page.get_by_role("textbox", name="Employee Type").fill("regular")
+    page.get_by_role("textbox", name="Employee Type").fill("Regular")
+    page.get_by_role("textbox", name="Employee Type").press("Enter")
+    time.sleep(1)
     page.get_by_role("textbox", name="Employee Type").press("Enter")
 
     page.get_by_role("textbox", name="Location").click()
-    page.get_by_role("textbox", name="Location").fill("cape")
+    page.get_by_role("textbox", name="Location").fill("Cape Town")
+    page.get_by_role("textbox", name="Location").press("Enter")
+    time.sleep(1)
     page.get_by_role("textbox", name="Location").press("Enter")
     
     page.get_by_role("textbox", name="Job Profile").click()
-    page.get_by_role("textbox", name="Job Profile").fill("tax")
+    page.get_by_role("textbox", name="Job Profile").fill("Tax Director")
     page.get_by_role("textbox", name="Job Profile").press("Enter")
-    page.get_by_text("Tax Accountant").click()
-
-    page.get_by_role("textbox", name="Time Type").click()
-    page.get_by_role("textbox", name="Time Type").fill("full time")
-    page.get_by_role("textbox", name="Time Type").press("Enter")
+    time.sleep(1)
+    page.get_by_role("textbox", name="Job Profile").press("Enter")
 
     page.get_by_role("button", name="Submit").click()
-    time.sleep(30)
